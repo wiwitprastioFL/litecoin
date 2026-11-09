@@ -1,0 +1,32 @@
+name: Build FlashLight
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libtool autotools-dev automake pkg-config bsdmainutils python3 libevent-dev libboost-system-dev libboost-filesystem-dev libboost-test-dev libboost-thread-dev libfmt-dev libdb++-dev libdb-dev
+
+      - name: Build
+        run: |
+          ./autogen.sh
+          ./configure --without-gui --disable-tests --disable-bench --with-incompatible-bdb
+          make -j2
+          mkdir out
+          cp src/litecoind out/flashlightd
+          cp src/litecoin-cli out/flashlight-cli
+          cp src/litecoin-tx out/flashlight-tx
+          tar czf flashlight-linux-x64.tar.gz -C out .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: flashlight-linux-x64
+          path: flashlight-linux-x64.tar.gz
