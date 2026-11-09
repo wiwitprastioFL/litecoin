@@ -1,85 +1,54 @@
-Litecoin Core integration/staging tree
-=====================================
+# FlashLight (FLG)
 
-[![Build Status](https://travis-ci.org/litecoin-project/litecoin.svg?branch=master)](https://travis-ci.org/litecoin-project/litecoin)
+FlashLight is an experimental cryptocurrency, forked from Litecoin Core (MIT License).
+This project is at an experimental stage: it has not been audited and has not been launched.
 
-https://litecoin.org
+## Features
 
-What is Litecoin?
-----------------
+- Fair launch, no pre-mine
+- Fixed supply of 250,000,000 FLG
+- 1-minute block time
+- Difficulty adjustment every 2 hours (120 blocks)
+- Based on Litecoin Core (Scrypt, minable with CPU/GPU)
+- Open source (MIT), parameters and genesis block are published
 
-Litecoin is an experimental digital currency that enables instant payments to
-anyone, anywhere in the world. Litecoin uses peer-to-peer technology to operate
-with no central authority: managing transactions and issuing money are carried
-out collectively by the network. Litecoin Core is the name of open source
-software which enables the use of this currency.
+## Parameters
 
-For more information, as well as an immediately useable, binary version of
-the Litecoin Core software, see [https://litecoin.org](https://litecoin.org).
+| Parameter | Value |
+|---|---|
+| Name / ticker | FlashLight / FLG |
+| Total supply | 250,000,000 FLG (fixed) |
+| Initial block reward | 50 FLG |
+| Halving interval | every 2,500,000 blocks |
+| Block time | 1 minute |
+| Difficulty adjustment | every 2 hours (120 blocks) |
+| Algorithm | Scrypt |
+| P2P port | 9533 |
+| Bech32 prefix | flg1... |
+| Pre-mine | None |
+| Data directory | ~/.flashlight |
 
-License
--------
+## Genesis block
 
-Litecoin Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
-information or see https://opensource.org/licenses/MIT.
+- Message: "FlashLight 09/Nov/2026 Cahaya baru untuk transaksi cepat"
+- Timestamp: 1794182400
+- nBits: 0x1e0ffff0
+- Nonce: 885415
+- Hash: 8f15feeda3dabbfc4b9c283136a65d55da27be0d81c93ee6ad84403a9a16a3e07
 
-Development Process
--------------------
+## Build
 
-The `master` branch is regularly built (see `doc/build-*.md` for instructions) and tested, but it is not guaranteed to be
-completely stable. [Tags](https://github.com/litecoin-project/litecoin/tags) are created
-regularly from release branches to indicate new official, stable release versions of Litecoin Core.
+Requires Linux (Ubuntu) with 2 GB RAM or more.
 
-The https://github.com/litecoin-project/gui repository is used exclusively for the
-development of the GUI. Its master branch is identical in all monotree
-repositories. Release branches and tags do not exist, so please do not fork
-that repository unless it is for development reasons.
+    sudo apt-get install -y build-essential libtool autotools-dev automake pkg-config bsdmainutils python3 libevent-dev libboost-system-dev libboost-filesystem-dev libboost-test-dev libboost-thread-dev libfmt-dev libdb++-dev libdb-dev
+    ./autogen.sh
+    ./configure --without-gui --disable-tests --disable-bench --with-incompatible-bdb
+    make -j2
 
-The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md)
-and useful hints for developers can be found in [doc/developer-notes.md](doc/developer-notes.md).
+## Disclaimer
 
-The developer [mailing list](https://groups.google.com/forum/#!forum/litecoin-dev)
-should be used to discuss complicated or controversial changes before working
-on a patch set.
-
-Developer IRC can be found on Freenode at #litecoin-dev.
-
-Testing
--------
-
-Testing and code review is the bottleneck for development; we get more pull
-requests than we can review and test on short notice. Please be patient and help out by testing
-other people's pull requests, and remember this is a security-critical project where any mistake might cost people
-lots of money.
-
-### Automated Testing
-
-Developers are strongly encouraged to write [unit tests](src/test/README.md) for new code, and to
-submit new unit tests for old code. Unit tests can be compiled and run
-(assuming they weren't disabled in configure) with: `make check`. Further details on running
-and extending unit tests can be found in [/src/test/README.md](/src/test/README.md).
-
-There are also [regression and integration tests](/test), written
-in Python, that are run automatically on the build server.
-These tests can be run (if the [test dependencies](/test) are installed) with: `test/functional/test_runner.py`
-
-The Travis CI system makes sure that every pull request is built for Windows, Linux, and macOS, and that unit/sanity tests are run automatically.
-
-### Manual Quality Assurance (QA) Testing
-
-Changes should be tested by somebody other than the developer who wrote the
-code. This is especially important for large or high-risk changes. It is useful
-to add a test plan to the pull request description if testing the changes is
-not straightforward.
-
-Translations
-------------
-
-We only accept translation fixes that are submitted through [Bitcoin Core's Transifex page](https://explore.transifex.com/bitcoin/bitcoin/).
-Translations are converted to Litecoin periodically.
-
-Translations are periodically pulled from Transifex and merged into the git repository. See the
-[translation process](doc/translation_process.md) for details on how this works.
-
-**Important**: We do not accept translation changes as GitHub pull requests because the next
-pull from Transifex would automatically overwrite them again.
+- The modified code has not been security audited.
+- A new network with low hashrate is vulnerable to 51% attacks.
+- Shorter block times can increase orphaned blocks.
+- No promises of profit or price increases are made.
+- Use for learning and experimentation only.
